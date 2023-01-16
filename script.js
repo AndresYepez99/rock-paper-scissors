@@ -1,3 +1,18 @@
+const img = document.querySelectorAll('.option-user');
+let arr = [...img];
+const pf = document.querySelector('.container-play-again');
+document.body.removeChild(pf);
+
+
+let playerScore = 0;
+let computerScore = 0;
+
+document.querySelector('#points-user').innerHTML = playerScore;
+document.querySelector('#points-machine').innerHTML = computerScore;
+
+
+
+
 /*Se genera una opcion aleatoria oara la maquina*/ 
 function getComputerChoise () {
     let option =  Math.floor(Math.random() * (3 - 1 + 1)) + 1;
@@ -10,56 +25,74 @@ function getComputerChoise () {
     }
 }
 
+function winUser() {
+    document.body.appendChild(pf);
+    document.querySelector('.message').innerHTML = '¡Haz ganado la batalla, felicidades! <ion-icon name="trophy-outline"></ion-icon>';
+    let btn = document.querySelector('#btn-play-again');
+    btn.textContent = 'jugar otra vez';
+    btn.addEventListener('click', () => {
+        playerScore = 0;
+        computerScore = 0;
+        document.querySelector('#points-machine').innerHTML = computerScore;
+        document.querySelector('#points-user').innerHTML = playerScore;
+        document.body.removeChild(pf);
+    })
+}
+
+function loserUser() {
+    document.body.appendChild(pf);
+    document.querySelector('.message').innerHTML =  '¡Haz sido derrotado! <ion-icon name="sad-outline"></ion-icon>';
+    let btn = document.querySelector('#btn-play-again');
+    btn.textContent = '¿Revancha?';
+    btn.addEventListener('click', () => {
+        playerScore = 0;
+        computerScore = 0;
+        document.querySelector('#points-machine').innerHTML = computerScore;
+        document.querySelector('#points-user').innerHTML = playerScore;
+        document.body.removeChild(pf);
+    })
+}
+
+
 /*Se reciben la opcion de cada jugador y retorna un ganador*/ 
-function playRound (playerSelection, computerSelection) {
+function playRound (playerSelection) {
+    let computerSelection = getComputerChoise();
+    let result = '';
+    if ((playerSelection == 'roca' && computerSelection == 'tijera') ||
+        (playerSelection == 'tijera' && computerSelection == 'papel') ||
+        (playerSelection == 'papel' && computerSelection == 'roca')) {
+            document.querySelector('#points-user').innerHTML = playerScore += 1;
+            result = '¡Tu ganas esta ronda!';
 
-    /*console.log("Jugador:" + playerSelection + " --- " + "Maquina:" + computerSelection);*/
-    if(playerSelection === "roca" && computerSelection === "roca") {
-        return "¡Empate!"
-    } else if (playerSelection === "tijera" && computerSelection === "tijera") {
-        return "¡Empate!"
-    } else if (playerSelection === "papel" && computerSelection === "papel") {
-        return "¡Empate!"
-    } else if (playerSelection === "roca" && computerSelection === "tijera") {
-        return "¡Tu ganas!"
-    } else if (playerSelection === "tijera" && computerSelection === "papel") {
-        return "¡Tu ganas!"
-    } else if (playerSelection === "papel" && computerSelection === "roca") {
-        return "¡Tu ganas!"
+            if (playerScore == 5) {
+                result = '!Haz conseguido la victoria!';
+                winUser();
+            }
+
+    } else if (playerSelection == computerSelection) {
+        result = '¡Empate!';
     } else {
-        return "¡Tu pierdes!"
-    }  
-}
+        document.querySelector('#points-machine').innerHTML = computerScore += 1;
+        result = '¡Pierdes esta ronda!';
 
-
-const computerSelection = getComputerChoise(); //Guarda el valor retornado por la funcion 
-
-/*Inicia el juego con la ayuda de la funcion playRound() y asigna la puntiacion para defnir un ganador*/
-function game () {
-    let jugador = 0;
-    let maquina = 0;
-    for(let i = 0; i < 3; i++) {      
-        let usOpcion = prompt("¿roca, papel o tijera?");
-        let result = playRound(usOpcion, computerSelection);
-        
-        if (result === "¡Tu ganas!") {
-            jugador++;
-        } else if (result === "¡Tu pierdes!") {
-            maquina++;
+        if (computerScore == 5) {
+            result = '!Haz sido derrotado!';
+            loserUser();
         }
-        console.log(result);
     }
-
-    console.log(jugador);
-    console.log(maquina);
-
-    if (jugador > maquina) {
-        return "Felicidades, eres el ganador!";
-    } else if (jugador < maquina) {
-        return "La maquina gana!";
-    }  else {
-        return "Es un empate";
-    }
+    
+    document.querySelector('#result').textContent = result;
+    return
 }
 
-console.log(game());
+
+arr.forEach(item => {
+    item.addEventListener('click', () => {
+        console.log(playRound(item.alt));
+        
+    })
+});
+
+
+//Hacer que la maquina reaccione a los resultados con comentarios 
+//Hacer que la maquina mande mensajes de provocacion segun el resultado 

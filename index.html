@@ -4,12 +4,70 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Piedra, papel o tijeras</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>  
-     
+<body>
+    <img class="img-paper" src="images/backgroundPaper.png" alt="paper fondo">  
+    <img class="img-machine" src="images/machine.png" alt="">
+    <img class="img-paper-down" src="images/backgroundPaper.png" alt="paper fondo">  
+    <header>
+        <h1>Piedra, Papel o Tijeras</h1>
+    </header>
+    
+    <main>
+        <div class="container-board">
+            <div class="username">
+                <span>Usuario</span>
+                <div class="options">
+                    <img class="option-user" src="images/rock.png" alt="roca">
+                    <img class="option-user" src="images/paper.png" alt="papel">
+                    <img class="option-user" src="images/scissors.png" alt="tijera">
+                </div>
+            </div>
+            <div class="container-score">
+                <span>Puntaje</span>
+                <div class="score">
+                    <span id="points-user"></span>
+                    <span>-</span>
+                    <span id="points-machine"></span>
+                </div>
+                <div>
+                    <p id="result">¡Que inicie la batalla!</p>
+                </div>
+            </div>
+            <div class="machine">
+                <span>Máquina</span>
+                <div class="options">
+                    <img class="option-machine" src="images/rock.png">
+                    <img class="option-machine" src="images/paper.png">
+                    <img class="option-machine" src="images/scissors.png">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="logo">
+            <img src="images/logo-odin.png" alt="logo odin">
+            Odin Project
+        </div>
+        <p>by Andrés Yepez</p>
+    </footer>   
+
+
+    <div class="container-play-again">
+        <p class="message">
+        </p>
+        <button id="btn-play-again">Jugar otra vez</button>
+    </div>
+
 
     <!--Js-->
     <script src="script.js"></script>
+    <!--Icons-->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
+

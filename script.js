@@ -1,6 +1,6 @@
-const img = document.querySelectorAll('.option-user');
-let arr = [...img];
-const pf = document.querySelector('.container-play-again');
+const img = document.querySelectorAll('.option-user'); // array de imagenes
+let arr = [...img]; 
+const pf = document.querySelector('.container-play-again'); // pantalla final
 document.body.removeChild(pf);
 
 
@@ -10,10 +10,13 @@ let computerScore = 0;
 document.querySelector('#points-user').innerHTML = playerScore;
 document.querySelector('#points-machine').innerHTML = computerScore;
 
+//Consultando imagenes de fondo
+const imgMachine = document.querySelector('.img-machine');
+const imgUser = document.querySelector('.img-user');
 
 
 
-/*Se genera una opcion aleatoria oara la maquina*/ 
+//Se genera una opcion aleatoria para la maquina
 function getComputerChoise () {
     let option =  Math.floor(Math.random() * (3 - 1 + 1)) + 1;
     if(option === 1) {
@@ -24,7 +27,7 @@ function getComputerChoise () {
         return "roca";
     }
 }
-
+//Si el usuario gana - esta funcion es llmada desde playRound()
 function winUser() {
     document.body.appendChild(pf);
     document.querySelector('.message').innerHTML = '¡Haz ganado la batalla, felicidades! <ion-icon name="trophy-outline"></ion-icon>';
@@ -39,6 +42,7 @@ function winUser() {
     })
 }
 
+//Si el usuario gana - esta funcion es llmada desde playRound()
 function loserUser() {
     document.body.appendChild(pf);
     document.querySelector('.message').innerHTML =  '¡Haz sido derrotado! <ion-icon name="sad-outline"></ion-icon>';
@@ -49,19 +53,25 @@ function loserUser() {
         computerScore = 0;
         document.querySelector('#points-machine').innerHTML = computerScore;
         document.querySelector('#points-user').innerHTML = playerScore;
+        document.querySelector('#result').textContent = '¡Que inicie la batalla!';
         document.body.removeChild(pf);
     })
 }
 
 
-/*Se reciben la opcion de cada jugador y retorna un ganador*/ 
+//remover animacion de personajes de fondo
+
+
+//Se reciben la opcion de cada jugador y retorna un ganador
 function playRound (playerSelection) {
     let computerSelection = getComputerChoise();
     let result = '';
     if ((playerSelection == 'roca' && computerSelection == 'tijera') ||
         (playerSelection == 'tijera' && computerSelection == 'papel') ||
         (playerSelection == 'papel' && computerSelection == 'roca')) {
+            
             document.querySelector('#points-user').innerHTML = playerScore += 1;
+            imgMachine.classList.toggle('animation-machine');
             result = '¡Tu ganas esta ronda!';
 
             if (playerScore == 5) {
@@ -73,8 +83,8 @@ function playRound (playerSelection) {
         result = '¡Empate!';
     } else {
         document.querySelector('#points-machine').innerHTML = computerScore += 1;
+        imgUser.classList.toggle('animation-user');
         result = '¡Pierdes esta ronda!';
-
         if (computerScore == 5) {
             result = '!Haz sido derrotado!';
             loserUser();
@@ -82,6 +92,7 @@ function playRound (playerSelection) {
     }
     
     document.querySelector('#result').textContent = result;
+    removeAnimation();
     return
 }
 
@@ -89,9 +100,9 @@ function playRound (playerSelection) {
 arr.forEach(item => {
     item.addEventListener('click', () => {
         console.log(playRound(item.alt));
-        
     })
 });
+
 
 
 //Hacer que la maquina reaccione a los resultados con comentarios 
